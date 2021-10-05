@@ -1,22 +1,8 @@
-"""
-Stock market prediction using Markov chains.
-
-For each function, replace the return statement with your code.  Add
-whatever helper functions you deem necessary.
-"""
-
-import comp140_module3 as stocks
-
 #Require defaultdict
 from collections import defaultdict
 
-#Creating a test dataset
-import random
-test_list = [random.randrange(0,4) for i in range(10)]
-#print(test_list)
 
 ### Model
-
 def markov_chain(data, order):
     """
     Create a Markov chain with the given order from the given data.
@@ -27,8 +13,7 @@ def markov_chain(data, order):
 
     returns: a dictionary that represents the Markov chain
     """
-    
-
+   
     
     #Empty dictionary that will eventually hold the completed Markov chain
     markov = defaultdict(dict)
@@ -73,7 +58,7 @@ def markov_chain(data, order):
     
     return markov
 
-print(markov_chain([1,1,3,1,1], 3))
+
 
 ### Predict
 
@@ -221,61 +206,3 @@ def run_experiment(train, order, test, future, actual, trials):
     avg_mse = avg_mse / trials
     
     return avg_mse
-
-
-### Application
-
-def run():
-    """
-    Run application.
-
-    You do not need to modify any code in this function.  You should
-    feel free to look it over and understand it, though.
-    """
-    # Get the supported stock symbols
-    symbols = stocks.get_supported_symbols()
-
-    # Get stock data and process it
-
-    # Training data
-    changes = {}
-    bins = {}
-    for symbol in symbols:
-        prices = stocks.get_historical_prices(symbol)
-        changes[symbol] = stocks.compute_daily_change(prices)
-        bins[symbol] = stocks.bin_daily_changes(changes[symbol])
-
-    # Test data
-    testchanges = {}
-    testbins = {}
-    for symbol in symbols:
-        testprices = stocks.get_test_prices(symbol)
-        testchanges[symbol] = stocks.compute_daily_change(testprices)
-        testbins[symbol] = stocks.bin_daily_changes(testchanges[symbol])
-
-    # Display data
-    #   Comment these 2 lines out if you don't want to see the plots
-    stocks.plot_daily_change(changes)
-    stocks.plot_bin_histogram(bins)
-
-    # Run experiments
-    orders = [1, 3, 5, 7, 9]
-    ntrials = 500
-    days = 5
-
-    for symbol in symbols:
-        print(symbol)
-        print("====")
-        print("Actual:", testbins[symbol][-days:])
-        for order in orders:
-            error = run_experiment(bins[symbol], order,
-                                   testbins[symbol][-order-days:-days], days,
-                                   testbins[symbol][-days:], ntrials)
-            print("Order", order, ":", error)
-        print()
-
-# You might want to comment out the call to run while you are
-# developing your code.  Uncomment it when you are ready to run your
-# code on the provided data.
-
-run()
