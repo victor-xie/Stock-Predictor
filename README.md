@@ -12,6 +12,6 @@ By grouping the variations in stock prices into four "bins", 0, 1, 2, 3, which r
 ### What functions are included in this project?
 A function to generate the Markov chain model, a function to predict future stock price data based on said model, a function to generate mean-squared error, and a function to run trials that test the efficacy of the model based on minimizing mean-squared error.
 
-###How can this project be tested?
+### How can this project be tested?
 Copy/paste the code into a compiler of your choice and add in test cases as you please. Note that while the Markov chain generator can intake any states, the other functions only provide correct results when restricted to the four bins (0, 1, 2, 3).
 
